@@ -1,0 +1,46 @@
+alias: "Webhook: Play Spotify Playlist by UID"
+description: A M5NanoC6 RFID2 shall trigger this Workflow to start a specific playlist
+triggers:
+  - webhook_id: ""  # Insert your random webhook ID here
+    trigger: webhook
+    allowed_methods:
+      - POST
+      - PUT
+    local_only: true
+actions:
+  - if:
+      - condition: template
+        value_template: "{{ selected_playlist != None }}"
+    then:
+      - action: media_player.select_source
+        metadata: {}
+        data:
+          source: ""  # The name of your source
+        target:
+          device_id: ""  # The device ID of your media player
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - action: media_player.play_media
+        data:
+          media_content_id: >-
+            https://open.spotify.com/playlist/{{ selected_playlist.playlist_id }}
+          media_content_type: playlist
+        target:
+          entity_id: media_player.xyz  # The entity ID of your media player
+    else:
+      - action: notify.xyz  # Replace with your notification service
+        metadata: {}
+        data:
+          message: "Tag was not found in playlist mapping: {{ trigger.json.UID }}"
+variables:
+  uid: "{{ trigger.json.UID }}"
+  playlist_map:
+    AB CD EF 01:
+      playlist_id: ""
+    01 AB CD EF:
+      playlist_id: ""
+  selected_playlist: "{{ playlist_map[uid] if uid in playlist_map else None }}"
+mode: single
