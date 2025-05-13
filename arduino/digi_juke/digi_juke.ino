@@ -14,7 +14,7 @@
 
 #include "MFRC522_I2C.h"
 #include "secrets.h"
-// #include "root_ca.h" // For future implementation of a webserver
+//#include "root_ca.h" // For future implementation for TLS verification of the HA server
 
 
 MFRC522 mfrc522(0x28);
@@ -40,6 +40,9 @@ void setup() {
   setupWifi();
   NanoC6.setClock();
   delay(50);
+
+  //client->setCACert(root_ca); // For future implementation for TLS verification of the HA server
+  client->setInsecure();
 
   mfrc522.PCD_Init();
   Serial.println("Please put the card.");

@@ -1,0 +1,9 @@
+#ifndef root_ca
+#define root_ca
+
+#define rootCACertificate R"string_literal(
+-----BEGIN CERTIFICATE-----
+MII...
+-----END CERTIFICATE-----
+)string_literal"
+#endif
