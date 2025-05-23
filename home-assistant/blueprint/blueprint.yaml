@@ -1,28 +1,28 @@
-name: Webhook: Play Spotify Playlist by UID
-        description: >
-          Trigger a Spotify playlist when a webhook is received with an RFID UID.
-          Useful for M5NanoC6 RFID projects.
-        domain: automation
-        input:
-          webhook_id:
-            name: Webhook ID
-            description: The webhook endpoint to listen to.
-            selector:
-              text:
-          device_id:
-            name: Media Player Device ID
-            description: Device ID of the media player that should play the playlist.
-            selector:
-              device:
-                integration: spotify
-          playlist_map:
-            name: Playlist UID Map
-            description: >
-              A mapping of RFID tag UIDs to Spotify playlist IDs. Use the format:
-              "UID": "Spotify Playlist ID"
-            default: {}
-            selector:
-              object:
+name: "Webhook: Play Spotify Playlist by UID"
+description: >
+  Trigger a Spotify playlist when a webhook is received with an RFID UID.
+  Useful for M5NanoC6 RFID projects.
+domain: automation
+input:
+  webhook_id:
+    name: Webhook ID
+    description: The webhook endpoint to listen to.
+    selector:
+      text:
+  device_id:
+    name: Media Player Device ID
+    description: Device ID of the media player that should play the playlist.
+    selector:
+      device:
+        integration: spotify
+  playlist_map:
+    name: Playlist UID Map
+    description: >
+      A mapping of RFID tag UIDs to Spotify playlist IDs. Use the format:
+      "UID": "Spotify Playlist ID"
+    default: {}
+    selector:
+      object:
 
 trigger:
   - platform: webhook
